@@ -1,8 +1,16 @@
+body {
+    margin: 0;
+    padding: 20px;
+    background-color: #f8fafc;
+}
+
 .timeline-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .timeline-title {
@@ -10,6 +18,7 @@
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 2rem;
+    color: #1a202c;
 }
 
 .filters-container {
@@ -29,7 +38,7 @@
     display: flex;
     justify-content: space-between;
     position: relative;
-    margin-bottom: 2rem;
+    margin: 3rem 0;
     padding: 1rem 0;
 }
 
@@ -41,7 +50,7 @@
     right: 0;
     height: 2px;
     background-color: #e2e8f0;
-    z-index: -1;
+    z-index: 1;
 }
 
 .year-marker {
@@ -54,15 +63,19 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
+    position: relative;
+    z-index: 2;
 }
 
 .year-marker:hover {
     background-color: #2563eb;
+    transform: scale(1.1);
 }
 
 .year-marker.active {
     background-color: #1d4ed8;
+    transform: scale(1.1);
 }
 
 .events-container {
@@ -77,6 +90,7 @@
     background-color: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
+    border-left: 4px solid transparent;
 }
 
 .event-card:hover {
@@ -86,6 +100,7 @@
 .event-title {
     font-weight: 600;
     margin-bottom: 0.5rem;
+    color: #1a202c;
 }
 
 .event-details {
@@ -93,7 +108,8 @@
     color: #64748b;
 }
 
-/* Estilos para diferentes tipos de eventos */
-.event-resolution { border-left: 4px solid #3b82f6; }
-.event-academic { border-left: 4px solid #22c55e; }
-.event-institutional { border-left: 4px solid #8b5cf6; }
+.event-resolution { border-left-color: #3b82f6; }
+.event-academic { border-left-color: #22c55e; }
+.event-institutional { border-left-color: #8b5cf6; }
+.event-approval { border-left-color: #eab308; }
+.event-research { border-left-color: #ef4444; }

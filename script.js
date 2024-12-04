@@ -114,72 +114,84 @@ const Timeline = () => {
         ]
     };
 
-    const months = [
-        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-    ];
+    const renderHeader = () => (
+        <div className="timeline-header">
+            <h1 className="timeline-title">Línea de Tiempo SIED UNT</h1>
+            <p className="timeline-subtitle">2013-2024</p>
+            
+            <div className="view-toggle">
+                <button 
+                    className={`view-button ${view === 'timeline' ? 'active' : ''}`}
+                    onClick={() => setView('timeline')}
+                >
+                    <i data-feather="clock" />
+                    Línea de Tiempo
+                </button>
+                <button 
+                    className={`view-button ${view === 'calendar' ? 'active' : ''}`}
+                    onClick={() => setView('calendar')}
+                >
+                    <i data-feather="calendar" />
+                    Calendario
+                </button>
+            </div>
+            
+            <div className="filters-container">
+                <div className="filter-group">
+                    <label className="filter-label">Tipo de Evento</label>
+                    <select 
+                        className="filter-select"
+                        value={typeFilter}
+                        onChange={(e) => setTypeFilter(e.target.value)}
+                    >
+                        <option value="todos">Todos los tipos</option>
+                        <option value="resolution">Resoluciones</option>
+                        <option value="academic">Eventos Académicos</option>
+                        <option value="institutional">Eventos Institucionales</option>
+                        <option value="approval">Aprobaciones</option>
+                        <option value="research">Investigación</option>
+                    </select>
+                </div>
+                <div className="filter-group">
+                    <label className="filter-label">Área</label>
+                    <select 
+                        className="filter-select"
+                        value={areaFilter}
+                        onChange={(e) => setAreaFilter(e.target.value)}
+                    >
+                        <option value="todas">Todas las áreas</option>
+                        <option value="Rectorado">Rectorado</option>
+                        <option value="SIED UNT">SIED UNT</option>
+                        <option value="Secretaría">Secretaría Académica</option>
+                        <option value="HCS">HCS UNT</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    );
 
-    const getEventIcon = (type) => {
-        switch(type) {
-            case 'resolution': return 'file-text';
-            case 'academic': return 'book';
-            case 'institutional': return 'landmark';
-            case 'approval': return 'award';
-            case 'research': return 'users';
-            case 'regulation': return 'book-open';
-            default: return 'calendar';
-        }
-    };
-
-    React.useEffect(() => {
-        // Inicializar Feather Icons después de cada render
-        if (window.feather) {
-            window.feather.replace();
-        }
-        
-        // Seleccionar el año más reciente por defecto
-        if (!selectedYear) {
-            setSelectedYear('2024');
-        }
-    }, [view, selectedYear]);
-
-    const filteredEvents = React.useMemo(() => {
-        if (!selectedYear) return [];
-        
-        return events[selectedYear].filter(event => {
-            const typeMatch = typeFilter === 'todos' || event.type === typeFilter;
-            const areaMatch = areaFilter === 'todas' || event.area.includes(areaFilter);
-            return typeMatch && areaMatch;
-        });
-    }, [selectedYear, typeFilter, areaFilter]);
-
-    const renderTimeline = () => (
-        <div className="events-grid">
-            {filteredEvents.map((event, index) => (
-                <div key={index} className={`event-card event-${event.type}`}>
-                    <i data-feather={getEventIcon(event.type)} className="event-icon" />
-                    <h3 className="event-title">{event.title}</h3>
-                    <div className="event-details">
-                        <div className="event-date">
-                            <i data-feather="calendar" className="w-4 h-4" />
-                            {event.month}
-                        </div>
-                        {event.doc && <div>{event.doc}</div>}
-                        <div>{event.area}</div>
-                    </div>
+    const renderYearSelector = () => (
+        <div className="timeline-nav">
+            {Object.keys(events).map(year => (
+                <div
+                    key={year}
+                    className={`year-marker ${selectedYear === year ? 'active' : ''}`}
+                    onClick={() => setSelectedYear(year)}
+                >
+                    {year}
                 </div>
             ))}
         </div>
     );
 
-    const renderCalendar = () => (
-        <div className="calendar-grid">
-            {months.map(month => {
-                const monthEvents = filteredEvents.filter(event => event.month === month);
-                
-                return (
-                    <div key={month} className="month-card">
-                        <h3 className="month-title">{month}</h3>
-                        <div className="month-events">
-                            {monthEvents.map((event, index) => (
-                                <div
+    return (
+        <div className="timeline-container">
+            {renderHeader()}
+            {renderYearSelector()}
+            {view === 'timeline' ? renderTimeline() : renderCalendar()}
+        </div>
+    );
+};
+
+// Renderizar la aplicación
+ReactDOM.render(<Timeline />, document.getElementById('root'));

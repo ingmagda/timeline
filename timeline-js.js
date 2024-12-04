@@ -1,3 +1,4 @@
+// Datos de eventos
 const events = {
     2013: [
         {
@@ -14,9 +15,77 @@ const events = {
             area: "SPU"
         }
     ],
-    // ... Agregar todos los eventos aquí
+    2021: [
+        {
+            title: "Diplomatura de Posgrado: Estrategias para enseñar y aprender en la Virtualidad",
+            type: "academic",
+            doc: "Res. N° 85-21",
+            area: "Secretaría de Posgrado y Secretaría Académica"
+        }
+    ],
+    2022: [
+        {
+            title: "Plan Estratégico Institucional UNT",
+            type: "institutional",
+            doc: "Documento Institucional",
+            area: "Rectorado"
+        },
+        {
+            title: "Reglamento General para Opciones Pedagógicas a Distancia",
+            type: "regulation",
+            doc: "Res. N° 2029-22",
+            area: "Rectorado"
+        },
+        {
+            title: "Estructura Organizacional del SIED UNT",
+            type: "institutional",
+            doc: "Res. N° 859-22",
+            area: "Rectorado"
+        }
+    ],
+    2023: [
+        {
+            title: "Comisión Intrainstitucional SIED UNT",
+            type: "institutional",
+            doc: "Res. N° 117/23",
+            area: "Rectorado"
+        },
+        {
+            title: "Aprobación Proyecto de Investigación PIUNT",
+            type: "research",
+            doc: "Res. HCS N° 356-23",
+            area: "HCS UNT"
+        },
+        {
+            title: "Taller 'La investigación científica y la formación de investigadores en EaD'",
+            type: "academic",
+            doc: "Res. N° 110-23",
+            area: "SIED UNT"
+        }
+    ],
+    2024: [
+        {
+            title: "Curso de Posgrado: IA en Acción",
+            type: "academic",
+            doc: "RES - DGAC - 5244/2024",
+            area: "SIED UNT"
+        },
+        {
+            title: "Convenio Marco UNT- Asociación Civil 'Chicos Net'",
+            type: "institutional",
+            doc: "RES - DGD - 13954/2024",
+            area: "SIED UNT"
+        },
+        {
+            title: "Ciclo de Talleres: Integrando IA en la UNT",
+            type: "academic",
+            doc: "RES - DGD - 16169/2024",
+            area: "SIED UNT"
+        }
+    ]
 };
 
+// Variables globales
 let selectedYear = null;
 const eventsContainer = document.getElementById('events-container');
 const typeFilter = document.getElementById('typeFilter');
@@ -35,6 +104,9 @@ function initTimeline() {
     // Configurar filtros
     typeFilter.addEventListener('change', updateEvents);
     areaFilter.addEventListener('change', updateEvents);
+    
+    // Seleccionar el año más reciente por defecto
+    selectYear('2024');
 }
 
 // Seleccionar un año
@@ -53,11 +125,11 @@ function updateEvents() {
     const type = typeFilter.value;
     const area = areaFilter.value;
     
-    const filteredEvents = events[selectedYear].filter(event => {
+    const filteredEvents = events[selectedYear]?.filter(event => {
         const typeMatch = type === 'todos' || event.type === type;
         const areaMatch = area === 'todas' || event.area.includes(area);
         return typeMatch && areaMatch;
-    });
+    }) || [];
     
     renderEvents(filteredEvents);
 }
@@ -65,6 +137,11 @@ function updateEvents() {
 // Renderizar eventos
 function renderEvents(eventsList) {
     eventsContainer.innerHTML = '';
+    
+    if (eventsList.length === 0) {
+        eventsContainer.innerHTML = '<p class="text-center text-gray-500 p-4">No se encontraron eventos para los filtros seleccionados</p>';
+        return;
+    }
     
     eventsList.forEach(event => {
         const card = document.createElement('div');
@@ -79,10 +156,6 @@ function renderEvents(eventsList) {
         
         eventsContainer.appendChild(card);
     });
-    
-    if (eventsList.length === 0) {
-        eventsContainer.innerHTML = '<p class="text-center text-gray-500">No se encontraron eventos para los filtros seleccionados</p>';
-    }
 }
 
 // Inicializar cuando el documento esté listo

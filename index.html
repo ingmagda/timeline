@@ -4,43 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Línea de Tiempo SIED UNT</title>
+    
+    <!-- React y ReactDOM -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel para JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <!-- CSS personalizado -->
     <link href="styles.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50">
-    <div class="timeline-container">
-        <h2 class="timeline-title">Línea de Tiempo SIED UNT (2013-2024)</h2>
-        
-        <!-- Filtros -->
-        <div class="filters-container">
-            <select id="typeFilter" class="filter-select">
-                <option value="todos">Todos los tipos</option>
-                <option value="resolution">Resoluciones</option>
-                <option value="academic">Eventos Académicos</option>
-                <option value="institutional">Eventos Institucionales</option>
-            </select>
-            
-            <select id="areaFilter" class="filter-select">
-                <option value="todas">Todas las áreas</option>
-                <option value="Rectorado">Rectorado</option>
-                <option value="SIED">SIED UNT</option>
-                <option value="Secretaría">Secretaría Académica</option>
-            </select>
-        </div>
-        
-        <!-- Línea de tiempo -->
-        <div class="timeline-nav">
-            <div class="year-marker" data-year="2013">2013</div>
-            <div class="year-marker" data-year="2019">2019</div>
-            <div class="year-marker" data-year="2021">2021</div>
-            <div class="year-marker" data-year="2022">2022</div>
-            <div class="year-marker" data-year="2023">2023</div>
-            <div class="year-marker" data-year="2024">2024</div>
-        </div>
-        
-        <!-- Contenedor de eventos -->
-        <div id="events-container" class="events-container"></div>
-    </div>
-    <script src="script.js"></script>
+<body>
+    <div id="root"></div>
+    <script type="text/babel" src="script.js"></script>
 </body>
 </html>
